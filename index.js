@@ -1,10 +1,14 @@
+import ssim from "ssim.js";
+
 let inputOriginal = this.document?.querySelector("#original");
 const previewOriginal = this.document?.querySelector("#previewOriginal");
 const inputCompare = this.document?.querySelector("#compare");
 const previewCompare = this.document?.querySelector("#previewCompare");
+const compareBtn = this.document?.querySelector("#compareBtn");
 
 inputOriginal?.addEventListener('change', updateImageDisplay);
 inputCompare?.addEventListener('change', updateImageDisplayC);
+compareBtn?.addEventListener('click', compare);
 
 function updateImageDisplay(){
     while(previewOriginal.firstChild){
