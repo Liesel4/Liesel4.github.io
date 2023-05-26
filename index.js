@@ -1,62 +1,92 @@
-import ssim from "ssim.js";
+(()=>{
+    const width = 320;
+    let height = 0;
 
-let inputOriginal = this.document?.querySelector("#original");
-const previewOriginal = this.document?.querySelector("#previewOriginal");
-const inputCompare = this.document?.querySelector("#compare");
-const previewCompare = this.document?.querySelector("#previewCompare");
-const compareBtn = this.document?.querySelector("#compareBtn");
+    let streaming = false;
+    let video = null;
+    let canvas = null;
+    let photo = null;
+    let startbutton = null;
 
-inputOriginal?.addEventListener('change', updateImageDisplay);
-inputCompare?.addEventListener('change', updateImageDisplayC);
-compareBtn?.addEventListener('click', compare);
-
-function updateImageDisplay(){
-    while(previewOriginal.firstChild){
-        previewOriginal.removeChild(previewOriginal.firstChild);
+    function showViewLiveResultButton(){
+        if(window.self !== window.top){
+            const button = document.createElement("button");
+            button.textContent = "View live result of the example code above";
+            document.body.append(button);
+            button.addEventListener("click",()=> window.open(location.href));
+            return true;
+        }
+        return false;
     }
-    const curFiles = inputOriginal.files;
-    if(curFiles.length === 0){
-        const p = document.createElement('p');
-        p.textContent = 'No file selected';
-        previewOriginal.appendChild(p);
-    } else{
-        const image = document.createElement('img');
-        originalImage = URL.createObjectURL(curFiles[0])
-        image.src = originalImage;
-        previewOriginal.appendChild(image);
-    }
-}
 
-function updateImageDisplayC(){
-    while(previewCompare.firstChild){
-        previewCompare.removeChild(previewCompare.firstChild);
-    }
-    const curFiles = inputCompare.files;
-    if(curFiles.length === 0){
-        const p = document.createElement('p');
-        p.textContent = 'No file selected';
-        previewCompare.appendChild(p);
-    } else{
-        const image = document.createElement('img');
-        compareImage = URL.createObjectURL(curFiles[0])
-        image.src = compareImage;
-        previewCompare.appendChild(image);
-    }
-}
+    function startup(){
+        if(showViewLiveResultButton()){return;}
+        video = document.getElementById("video");
+        canvas = document.getElementById("canvas");
+        photo = document.getElementById("photo");
+        startbutton = document.getElementById("startbutton");
 
-function compare(){
-    ssim(originalImage,compareImage)
-    .then(function(out){
-        console.degub(out.mssim)
-    })
-}
+        navigator.mediaDevices
+            .getUserMedia({video: {facingMode: {exact: "environment"}}, audio: false})
+            .then((stream) => {
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch((err) => {
+                alert(`An error occured: ${err}`);
+            });
+        
+        video.addEventListener(
+            "canplay", 
+            (ev) => {
+                if(!streaming){
+                    height = video.videoHeight / (video.videoWidth / width);
 
-function hasGetUserMedia(){
-    return !!(navigator.getUserMedia || navibator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-}
+                    if(isNaN(height)){
+                        height = width / (4/3);
+                    }
 
-if(hasGetUserMedia()){
-    
-} else {
-    alert("getUserMedia() is not supported in your browser :(");
-}
+                    video.setAttribute("width", width);
+                    video.setAttribute("height", height);
+                    canvas.setAttribute("width", width);
+                    canvas.setAttribute("height", height);
+                    streaming = true;
+                }
+            }, false
+        );
+
+        startbutton.addEventListener(
+            "click", 
+            (ev) => {
+                takepicture();
+                ev.preventDefault();
+            }, false
+        );
+        clearphoto();
+
+        }
+
+        function clearphoto(){
+            const context = canvas.getContext("2d");
+            context.fillStyle = "#AAA";
+            context.fillRect(0,0,canvas.width, canvas.height);
+            const data = canvas.toDataURL("image/png");
+            photo.setAttribute("src", data);
+        }
+
+        function takepicture(){
+            const context = canvas.getContext("2d");
+            if(width && height){
+                canvas.width = width;
+                canvas.height = height;
+                context.drawImage(video,0,0,width,height);
+
+                const data = canvas.toDataURL("image/png");
+                photo.setAttribute("src", data);
+            }else{
+                clearphoto();
+            }
+        }
+
+        window.addEventListener("load", startup, false);
+})

@@ -2,17 +2,17 @@
 <html>
     <head>
         <title>Bildvergleich</title>
-        
+        <link rel="stylesheet" type="text/css" href="index.css" />
     </head>
     <body>
-
-        <label for="original">Take a picture</label>
-        <input type="file" id="original" name="original" accept="image/*;capture=camera">
-
-        <div class="preview" id="previewOriginal">
-            <p>No file selected</p>
+        <div class="camera">
+            <video id="video">Video stream not available.</video>
+            <button id="startbutton">Take photo</button>
         </div>
-        <button id="compareBtn">Vergleiche</button>
+        <canvas id="canvas"></canvas>
+        <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box."/>
+        </div>
         <script src="index.js"></script>
     </body>
 </html>
