@@ -5,17 +5,11 @@
         
     </head>
     <body>
-        <h2>Bildvergleich</h2>
-        <p>Originalbild</p>
-        <label for="original">Wähle ein Originalbild</label>
-        <input type="file" id="original" name="original" accept="image/png, image/jpeg">
+
+        <label for="original">Take a picture</label>
+        <input type="file" id="original" name="original" accept="image/*;capture=camera">
+
         <div class="preview" id="previewOriginal">
-            <p>No file selected</p>
-        </div>
-        <p>Vergleichsbild</p>
-        <label for="original">Wähle ein Vergleichsbild</label>
-        <input type="file" id="compare" name="compare" accept="image/png, image/jpeg">
-        <div class="preview" id="previewCompare">
             <p>No file selected</p>
         </div>
         <button id="compareBtn">Vergleiche</button>

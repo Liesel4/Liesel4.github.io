@@ -50,3 +50,13 @@ function compare(){
         console.degub(out.mssim)
     })
 }
+
+function hasGetUserMedia(){
+    return !!(navigator.getUserMedia || navibator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+}
+
+if(hasGetUserMedia()){
+    
+} else {
+    alert("getUserMedia() is not supported in your browser :(");
+}
