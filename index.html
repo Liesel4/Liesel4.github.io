@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Bildvergleich</title>
-        <link rel="stylesheet" type="text/css" href="index.css" />
+        <meta charset="UTF-8" />
+        <title>Kronkorken</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
     </head>
     <body>
-        <div class="camera">
-            <video id="video">Video stream not available.</video>
-            <button id="startbutton">Take photo</button>
-        </div>
-        <canvas id="canvas"></canvas>
-        <div class="output">
-            <img id="photo" alt="The screen capture will appear in this box."/>
-        </div>
-        <script src="index.js"></script>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img
+                    src="./assets/boehni.png"
+                    width="30"
+                    height="30"
+                    class="d-inline-block align-top"
+                    alt=""
+                />
+                Kronkorken
+            </a>
+        </nav>
     </body>
 </html>
