@@ -178,34 +178,25 @@
             }
 
             .gallery-container {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
+              max-width: 800px;
+              margin: 0 auto;
+              padding: 20px;
             }
             
             .main-image {
               margin-bottom: 20px;
-              display: grid;
-              height: 100%;
-
-              img{
-                max-width: 100%;
-                max-height: 100vh;
-                margin: auto;
-                padding: 0 1em;
-              }
             }
             
             .thumbnail-images {
               display: flex;
               flex-wrap: wrap;
               justify-content: center;
-              margin: 0 1em;
             }
             
             .thumbnail {
-              width: 100px;
-              height: 100px;
+              width: calc(33.33% - 10px);
+              max-width: 150px;
+              height: auto;
               margin: 5px;
               cursor: pointer;
               object-fit: cover;
@@ -215,10 +206,16 @@
               opacity: 0.7;
             }
             
-            @media screen and (min-width: 768px) {
+            @media screen and (max-width: 768px) {
               .thumbnail {
-                width: 150px;
-                height: 150px;
+                width: calc(50% - 10px);
+              }
+            }
+            
+            @media screen and (max-width: 480px) {
+              .thumbnail {
+                width: 100%;
+                max-width: none;
               }
             }
         </style> 
